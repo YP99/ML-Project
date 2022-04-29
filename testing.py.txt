@@ -1,0 +1,22 @@
+import joblib
+import pandas as pd
+from sklearn.metrics import accuracy_score, precision_score, recall_score
+from time import time
+
+val_x = pd.read_csv('C:/Users/yash/Desktop/final ml/val_x.csv')
+val_y = pd.read_csv('C:/Users/yash/Desktop/final ml/val_y.csv', header=None)
+models = {}
+
+for mdl in ['LR', 'MLP', 'RF', 'GB']:
+    models[mdl] = joblib.load('C:/Users/yash/Desktop/final ml/{}_model.pkl'.format(mdl))
+models
+def evaluate_model(name, model, features, labels):
+    print(name)
+    pred = model.predict(features)
+    print(metrics.classification_report(pred,val_y))
+    print("Accuracy")
+    print(accuracy_score(val_y,pred))
+from sklearn import metrics
+from sklearn.metrics import accuracy_score
+for name, mdl in models.items():
+    evaluate_model(name, mdl, val_x, val_y)

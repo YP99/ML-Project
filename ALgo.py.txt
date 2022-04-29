@@ -1,0 +1,138 @@
+#importing Libraries
+import pandas as pd
+import seaborn as sns
+import numpy as np
+
+#loading dataset
+dataframe = pd.read_csv("C:\\Users\\yash\\Desktop\\Project Stage 1\\dataset1.csv", error_bad_lines=False)
+print(dataframe.head())
+
+#analysing and cleaning dataset
+dataframe.info()
+dataframe.dtypes
+dataframe.isnull().sum()
+dataframe.dropna(inplace=True)
+
+#splitting the data
+from sklearn.model_selection import train_test_split
+x = dataframe.drop(["status"],axis=1)
+y = dataframe["status"]
+X_train, X_val, y_train, y_val = train_test_split(x,y, test_size=0.4, random_state=42)
+
+#Storing separated data in csv file
+X_train.to_csv('C:/Users/yash/Desktop/final ml/train_x.csv', index=False)
+X_val.to_csv('C:/Users/yash/Desktop/final ml/val_x.csv', index=False)
+
+y_train.to_csv('C:/Users/yash/Desktop/final ml/train_y.csv', index=False)
+y_val.to_csv('C:/Users/yash/Desktop/final ml/val_y.csv', index=False)
+
+#function to print result
+def print_results(results):
+    print('BEST PARAMS: {}\n'.format(results.best_params_))
+
+    means = results.cv_results_['mean_test_score']
+    stds = results.cv_results_['std_test_score']
+    for mean, std, params in zip(means, stds, results.cv_results_['params']):
+        print('{} (+/-{}) for {}'.format(round(mean, 3), round(std * 2, 3), params))
+
+#training the model
+#1 Logistic Regression
+import joblib
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV
+import warnings
+warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+
+tr_x = pd.read_csv('C:/Users/yash/Desktop/final ml/train_x.csv')
+tr_y = pd.read_csv('C:/Users/yash/Desktop/final ml/train_y.csv', header=None)
+
+lr = LogisticRegression()
+parameters = {
+    'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000]
+}
+
+cv = GridSearchCV(lr, parameters, cv=5)
+cv.fit(tr_x, tr_y.values.ravel())
+
+print_results(cv)
+cv.best_estimator_
+
+#store the best fit configuration
+joblib.dump(cv.best_estimator_, 'C:/Users/yash/Desktop/final ml/LR_model.pkl')
+
+
+#2 Multilayer Perceptron
+import joblib
+import pandas as pd
+from sklearn.model_selection import GridSearchCV
+from sklearn.neural_network import MLPClassifier
+import warnings
+warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+
+tr_x = pd.read_csv('C:/Users/yash/Desktop/final ml/train_x.csv')
+tr_y = pd.read_csv('C:/Users/yash/Desktop/final ml/train_y.csv', header=None)
+
+mlp = MLPClassifier()
+parameters = {
+    'hidden_layer_sizes': [(10,), (50,), (100,)],
+    'activation': ['relu', 'tanh', 'logistic'],
+    'learning_rate': ['constant', 'invscaling', 'adaptive']
+}
+
+cv = GridSearchCV(mlp, parameters, cv=5)
+cv.fit(tr_x, tr_y.values.ravel())
+
+print_results(cv)
+cv.best_estimator_
+joblib.dump(cv.best_estimator_, 'C:/Users/yash/Desktop/final ml/MLP_model.pkl')
+
+#3 Random Forest
+import joblib
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
+import warnings
+warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+
+tr_x = pd.read_csv('C:/Users/yash/Desktop/final ml/train_x.csv')
+tr_y = pd.read_csv('C:/Users/yash/Desktop/final ml/train_y.csv', header=None)
+
+rf = RandomForestClassifier()
+parameters = {
+    'n_estimators': [5, 50, 250],
+    'max_depth': [2, 4, 8, 16, 32, None]
+}
+
+cv = GridSearchCV(rf, parameters, cv=5)
+cv.fit(tr_x, tr_y.values.ravel())
+
+print_results(cv)
+joblib.dump(cv.best_estimator_, 'C:/Users/yash/Desktop/final ml/RF_model.pkl')
+
+#4Boosting
+import joblib
+import pandas as pd
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.model_selection import GridSearchCV
+import warnings
+warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+
+tr_x = pd.read_csv('C:/Users/yash/Desktop/final ml/train_x.csv')
+tr_y = pd.read_csv('C:/Users/yash/Desktop/final ml/train_y.csv', header=None)
+
+gb = GradientBoostingClassifier()
+parameters = {
+    'n_estimators': [5, 50, 250, 500],
+    'max_depth': [1, 3, 5, 7, 9],
+    'learning_rate': [0.01, 0.1, 1, 10, 100]
+}
+
+cv = GridSearchCV(gb, parameters, cv=5)
+cv.fit(tr_x, tr_y.values.ravel())
+print_results(cv)
+joblib.dump(cv.best_estimator_, 'C:/Users/yash/Desktop/final ml/GB_model.pkl')
