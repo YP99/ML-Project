@@ -3,3 +3,4 @@ malaria is the examination of a stained blood cell of a patient in microscope wh
 project, an improved image processing system along with different machine learning algorithms for detection of parasites is proposed. On
 implementation we found the accuracy of the model varying from 85% to 90% for different algorithms.
 This model has increased the efficiency of malaria parasite detection and minimizes the human intervention during the detection process.
+This will help in early detection and treatment of disease
