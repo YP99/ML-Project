@@ -1,0 +1,11 @@
+Data is generated using the image processing procedure discussed in above chapter. The data consists of five maximum areas of the contour along with the status. The data is visualized using the pandas library. Later on the data is cleaned by removing the null value, infinity value generated due to some error. The dataset is divided into training and testing data at random. The ratio of training and testing data is 4:1.The training data is used to train the model whereas testing data is to evaluate the model. The classification algorithms used are Logistic Regression, Decision Tree Classifier, Random Forest Classifier, Support Vector Machine and Bagging Classifier.
+
+A. Logistic Regression It is the regression analysis conducted when the dependent variable is binary i.e. present or absent. It is used to describe data and to explain relation between the dependant variable and the rest of independent variable.
+
+B. Decision Tree Classifier This approach is used for the classification purpose as well as regression purpose. In this method a set of training examples is broken down into smaller and smaller subsets while at the same time an associated decision tree gets incrementally developed. At the end of the learning process, a decision tree covering the training set is returned.
+
+C. Random Forest Classifier This approach consists of a large number of individual decision trees that operates as an ensemble. Each tree in forest results out a class prediction and the class with the most votes becomes our model’s prediction.
+
+D. Support Vector Machine Support Vector Machine is a supervised learning algorithm in which the dataset is plotted using the independent variables and the dependent variable. The points plotted are classified into two groups. A support vector machine outputs a map of the sorted data with the margins between the two as far apart as possible.
+
+E. Bagging Classifier It is also known as bootstrap aggregating. It is a machine learning ensemble meta-algorithm which was designed to improve the stability and accuracy of machine learning algorithm. Avoidance of overfitting problem and reduction in variance can be done with the help of bagging classifier.

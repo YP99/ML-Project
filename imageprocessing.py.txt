@@ -1,0 +1,94 @@
+For Parasitized Image
+# importing header
+import cv2,os
+import numpy as np
+import csv
+import glob
+
+label = "Parasitized"
+# upload directory.
+dirList = glob.glob("cell_images/"+label+"/*.png")
+
+#open csv file (if not present create new)
+file = open("dataset1.csv","a")
+
+#reading image
+For img_path in dirList:
+im = cv2.imread(img_path)
+#blurring image
+im = cv2.GaussianBlur(im,(3,3),1)
+#bgr to gray
+im_gray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
+# thresholding
+ret,thresh = cv2.threshold(im_gray,127,255,0)
+#defining contours
+contours,_ = cv2.findContours(thresh,1,2)
+
+for contour in contours:
+cv2.drawContours(im_gray, contours, -1, (0,255,0), 3)
+cv2.imshow("window",im_gray)
+cv2.imshow("thres",thresh)
+cv2.imshow("originaal",im)
+file.write(label)
+file.write(",")
+
+#finding areas of each contours
+for i in range(5):
+try:
+area = cv2.contourArea(contours[i])
+# writing in csv file
+file.write(str(area))
+except:
+file.write("0")
+file.write(",")
+file.write("\n")
+
+cv2.waitKey(19000)
+For Non-Parasitized Image
+# importing header
+import cv2,os
+import numpy as np
+import csv
+import glob
+
+label = "non-parasitized"
+# upload directory.
+dirList = glob.glob("cell_images/"+label+"/*.png")
+
+#open csv file (if not present create new)
+file = open("dataset1.csv","a")
+
+#reading image
+for img_path in dirList:
+im = cv2.imread(img_path)
+#blurring image
+im = cv2.GaussianBlur(im,(3,3),1)
+#bgr to gray
+im_gray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
+# thresholding
+ret,thresh = cv2.threshold(im_gray,127,255,0)
+#defining contours
+contours,_ = cv2.findContours(thresh,1,2)
+
+for contour in contours:
+cv2.drawContours(im_gray, contours, -1, (0,255,0), 3)
+cv2.imshow("window",im_gray)
+cv2.imshow("thres",thresh)
+cv2.imshow("originaal",im)
+
+file.write(label)
+file.write(",")
+
+#finding area of each contours
+for i in range(5):
+try:
+area = cv2.contourArea(contours[i])
+# writing in csv file
+file.write(str(area))
+except:
+file.write("0")
+
+file.write(",")
+file.write("\n")
+
+cv2.waitKey(19000)

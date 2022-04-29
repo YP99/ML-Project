@@ -1,0 +1,5 @@
+Malaria is mosquito-borne blood disease caused by protozoan parasites of the genus Plasmodium. The Conventional diagnostic tool for
+malaria is the examination of a stained blood cell of a patient in microscope which is time consuming and dependent on the experience of a pathologist. In this
+project, an improved image processing system along with different machine learning algorithms for detection of parasites is proposed. On
+implementation we found the accuracy of the model varying from 85% to 90% for different algorithms.
+This model has increased the efficiency of malaria parasite detection and minimizes the human intervention during the detection process.
